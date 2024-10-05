@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Finder</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Music Finder</h1>
+        <p>Find your favorite music across platforms</p>
+        <form id="searchForm" action="/" method="get">
+            <input type="text" name="song" placeholder="Enter song name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="results">
+            <h2>Search Results</h2>
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Song Name</th>
+                        <th>Artist</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for platform, tracks in results.items() %}
+                        {% for track in tracks %}
+                        <tr>
+                            <td>{% if platform == "spotify" %}
+                                <img src="/static/images/spotify.png" alt="Spotify" width="30" height="30">
+                            {% elif platform == "youtube" %}
+                                <img src="/static/images/youtube.png" alt="YouTube" width="30" height="30">
+                            {% elif platform == "soundcloud" %}
+                                <img src="/static/images/soundcloud.png" alt="SoundCloud" width="30" height="30">
+                            {% elif platform == "itunes" %}
+                                <img src="/static/images/itunes.png" alt="iTunes" width="30" height="30">
+                            {% endif %}</td>
+                            <td>{{ track.song_name }}</td>
+                            <td>{{ track.artist }}</td>
+                            <td><a href="{{ track.url }}" target="_blank">Listen</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
