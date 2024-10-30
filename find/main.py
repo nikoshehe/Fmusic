@@ -8,7 +8,11 @@ from find.routers import youtube, spotify, soundcloud, itunes
 app = FastAPI()
 
 # Mount pro statické soubory (CSS, JavaScript, obrázky)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount(
+    "/static", 
+    StaticFiles(directory=os.path.join(os.path.dirname(__file__), "static")), 
+    name="static"
+)
 
 # Nastavení šablon (Jinja2)
 templates = Jinja2Templates(directory="templates")
