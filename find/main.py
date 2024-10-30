@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
-from routers import youtube, spotify, soundcloud, itunes
+from find.routers import youtube, spotify, soundcloud, itunes
 
 app = FastAPI()
 
