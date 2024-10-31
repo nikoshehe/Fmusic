@@ -27,9 +27,11 @@ app.include_router(itunes.router)
 # Hlavní stránka vracející HTML šablonu
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request, song: str = None):
+    results = {}
     if song:
         youtube_results = await youtube.search_song(song)
         spotify_results = await spotify.search_spotify(song)
+        results["spotify"] = spotify_results
         # soundclout_results = await soundcloud.search_song(song)
         # itunes_results = await itunes.search_song(song)
 
