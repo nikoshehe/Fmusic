@@ -30,7 +30,7 @@ async def search_spotify(song: str):
             }
             response.append(track_info)
 
-        return {"spotify_results": response}
+        return response
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error accessing Spotify API: {str(e)}")
