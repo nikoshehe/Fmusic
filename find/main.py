@@ -11,12 +11,12 @@ app = FastAPI()
 # Mount pro statické soubory (CSS, JavaScript, obrázky)
 app.mount(
     "/static", 
-    StaticFiles(directory=os.path.join(os.path.dirname(__file__), "find", "static")), 
+    StaticFiles(directory=os.path.join(os.path.dirname(__file__), "static")), 
     name="static"
 )
 
 # Nastavení šablon (Jinja2)
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "find", "templates"))
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
 # Youtube, Spotify, SoundCloud, iTunes routry
 app.include_router(youtube.router)
