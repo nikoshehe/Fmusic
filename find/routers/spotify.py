@@ -26,7 +26,7 @@ async def search_spotify(song: str):
             track_info = {
                 "song_name": track['name'],
                 "artist": track['artists'][0]['name'],
-                "url": track['extermal_urls']['spotify']
+                "url": track['external_urls']['spotify']
             }
             response.append(track_info)
 
