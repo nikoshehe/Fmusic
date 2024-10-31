@@ -29,7 +29,7 @@ app.include_router(itunes.router)
 async def read_root(request: Request, song: str = None):
     if song:
         youtube_results = await youtube.search_song(song)
-        spotify_results = await spotify.search_song(song)
+        spotify_results = await spotify.search_spotify(song)
         # soundclout_results = await soundcloud.search_song(song)
         # itunes_results = await itunes.search_song(song)
 
