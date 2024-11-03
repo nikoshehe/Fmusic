@@ -18,7 +18,7 @@ async def search_spotify(song: str):
         raise HTTPException(status_code=400, detail = "No song name provided")
 
     try:
-        results = sp.search(q=song, limit=5, type='track')
+        results = sp.search(q=song, limit=3, type='track')
         tracks = results['tracks']["items"]
 
         response = []
