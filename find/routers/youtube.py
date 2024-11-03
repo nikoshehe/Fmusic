@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-inport httpx
+import httpx
 import requests
 
 router = APIRouter()
