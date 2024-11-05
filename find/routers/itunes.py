@@ -10,12 +10,11 @@ async def search_itunes(song: str):
         raise HTTPException(status_code=400, detail="No song name provided")
 
     try:
-        # Použití itunespy k vyhledání skladeb
-        results = itunespy.search_song(song, media='music', limit=5)
+        # Použití itunespy pro vyhledání skladeb
+        results = itunespy.search(song, media='music', limit=3)
 
         itunes_results = []
         for item in results:
-            # Ujisti se, že používáš správné názvy atributů
             track_info = {
                 "song_name": item.track_name,  # Zkontroluj, zda to je správný atribut
                 "artist": item.artist_name,
