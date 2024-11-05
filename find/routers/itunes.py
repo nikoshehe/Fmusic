@@ -28,5 +28,5 @@ async def search_itunes(song: str):
     return results  # Mělo by vrátit seznam slovníků
 
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching data from iTunes: {str(e)}")
+except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Error fetching data from iTunes: {str(e)}")
