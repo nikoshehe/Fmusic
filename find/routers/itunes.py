@@ -1,3 +1,7 @@
+from fastapi import APIRouter, HTTPException
+import httpx
+import itunespy
+
 @router.get("/itunes-search")
 async def search_itunes(song: str):
     if not song:
