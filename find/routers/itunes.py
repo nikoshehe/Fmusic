@@ -2,7 +2,10 @@ from fastapi import APIRouter, HTTPException
 import httpx
 import itunespy
 
+router = APIRouter()
+
 @router.get("/itunes-search")
+
 async def search_itunes(song: str):
     if not song:
         raise HTTPException(status_code=400, detail="No song name provided")
