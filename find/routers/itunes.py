@@ -1,6 +1,6 @@
 # routers/itunes.py
 from fastapi import APIRouter, HTTPException
-import requests
+import httpx
 
 router = APIRouter()
 
@@ -11,20 +11,22 @@ async def search_itunes(song: str):
 
     url = f"https://itunes.apple.com/search?term={song}&media=music&limit=5"
     
-    response = requests.get(url)
     
-    if response.status_code != 200:
-        raise HTTPException(status_code=response.status_code, detail="Error fetching data from iTunes.")
-    
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail="Error fetching data from iTunes.")
+
     # Parsování odpovědi
     data = response.json()
     results = []
     
     for item in data.get("results", []):
         track_info = {
-            "song_name": item["trackName"],
-            "artist": item["artistName"],
-            "url": item["trackViewUrl"]
+            "song_name": item.get("trackName", "Unknown Track"),
+            "artist": item.get("artistName", "Unknown Artist"),
+            "url": item.get("trackViewUrl", "")
         }
         results.append(track_info)
 
