@@ -1,6 +1,6 @@
 # routers/itunes.py
 from fastapi import APIRouter, HTTPException
-from itunespy import Itunes  # Opravený import
+import itunespy
 
 router = APIRouter()
 
