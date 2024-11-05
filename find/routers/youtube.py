@@ -16,7 +16,7 @@ async def search_song(song: str):
     return {"youtube": youtube_result}
 
 async def search_youtube(song_name: str):
-    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={song_name}&key={YOUTUBE_API_KEY}"
+    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={song_name}&type=video&maxResults=3&key={YOUTUBE_API_KEY}"
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
 
