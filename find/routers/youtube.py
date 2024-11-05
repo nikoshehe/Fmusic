@@ -36,7 +36,7 @@ async def search_youtube(song_name: str):
             video_id = item["id"].get("videoId")
             if video_title and video_id:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
-                results.append({"title": video_title, "url": video_url})
+                results.append({"song_name": video_title, "url": video_url})
         else:
             print("Snippet not found in item:", item)
 
