@@ -1,6 +1,6 @@
 # routers/itunes.py
 from fastapi import APIRouter, HTTPException
-from itunespy import itunespy  # Importuj iTunesPy knihovnu
+from itunespy import Itunes  # Opravený import
 
 router = APIRouter()
 
@@ -9,17 +9,24 @@ async def search_itunes(song: str):
     if not song:
         raise HTTPException(status_code=400, detail="No song name provided")
 
-    # Vyhledání skladeb pomocí knihovny iTunesPy
-    results = itunespy.search_itunes(song, media='music', limit=5)
+    # Vytvoření instance Itunes
+    itunes = Itunes()
 
-    # Zpracování výsledků
-    track_info_list = []
-    for item in results:
-        track_info = {
-            "song_name": item.track_name,  # Název skladby
-            "artist": item.artist_name,     # Název umělce
-            "url": item.track_view_url      # URL skladby
-        }
-        track_info_list.append(track_info)
+    try:
+        # Vyhledávání skladeb
+        results = itunes.search(song, media='music', limit=5)
 
-    return {"itunes_results": track_info_list}
+        # Zpracování výsledků
+        itunes_results = []
+        for item in results:
+            track_info = {
+                "song_name": item.track_name,  # Uprav na skutečné atributy
+                "artist": item.artist_name,
+                "url": item.track_view_url,
+            }
+            itunes_results.append(track_info)
+
+        return {"itunes_results": itunes_results}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching data from iTunes: {str(e)}")
