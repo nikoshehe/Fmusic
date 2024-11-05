@@ -31,7 +31,7 @@ async def search_youtube(song_name: str):
     for item in data.get("items", []):
         snippet = item.get("snippet")
         if snippet:
-            video_title = snippet.get("song_name")  # Získání názvu
+            video_title = snippet.get("title")  # Získání názvu
             video_id = item["id"].get("videoId")
             if video_title and video_id:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
