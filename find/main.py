@@ -33,14 +33,14 @@ async def read_root(request: Request, song: str = None):
         spotify_results = await spotify.search_spotify(song)
         results["spotify", "youtube"] = spotify_results, youtube_results
         # soundclout_results = await soundcloud.search_song(song)
-        # itunes_results = await itunes.search_song(song)
+        itunes_results = await itunes.search_song(song)
 
         # spojí výsledky z různch platforem do jednoho slovníků
         results = {
             "youtube": youtube_results,
             "spotify": spotify_results,
             # "soundcloud": soundcloud_results,
-            # "itunes": itunes_results,
+            "itunes": itunes_results,
         }
     else:
         # není zadáná žádná písnička
