@@ -11,7 +11,7 @@ async def search_itunes(song: str):
         raise HTTPException(status_code=400, detail="No song name provided")
     
     try:
-        url = f"https://itunes.apple.com/search?term={song}&media=music&limit=5"
+        url = f"https://itunes.apple.com/search?term={song}&media=music&limit=3"
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
 
