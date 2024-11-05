@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException
 import httpx
-import requests
 import re
 
 router = APIRouter()
@@ -8,13 +7,14 @@ router = APIRouter()
 # YT API
 YOUTUBE_API_KEY = "AIzaSyDbS4PnwAeBY8lRwmVVL67gYDjDW0cK_tQ"
 
-def perse_youtube_title(title):
+def parse_youtube_title(title):  # Opravil jsem název funkce
     parts = re.split(r" - | \|", title)
     if len(parts) >= 2:
-        artist = parts[].strip()
-        song_name(title.strip()
+        artist = parts[0].strip()  # Opravil jsem indexaci
+        song_name = parts[1].strip()  # Opravil jsem přiřazení
 
-    return song_name, artist
+        return song_name, artist
+    return title.strip(), ""  # Pokud není rozdělení, vrátíme celý název
 
 @router.get("/youtube-search")
 async def search_song(song: str):
@@ -37,26 +37,25 @@ async def search_youtube(song_name: str):
 
     results = []
 
-   for item in data.get("items", []):
-    snippet = item.get("snippet")
-    if snippet:
-        video_title = snippet.get("title")  # Získání názvu videa
-        channel_title = snippet.get("channelTitle")  # Získání názvu kanálu (umělce)
-        video_id = item["id"].get("videoId")
-        
-        if video_title and video_id:
-            video_url = f"https://www.youtube.com/watch?v={video_id}"
-            
-            # Rozdělení názvu na song_name a artist pomocí parse_youtube_title
-            song_name, artist = parse_youtube_title(video_title)
-            
-            results.append({
-                "song_name": song_name,  # Použije název skladby z funkce
-                "artist": artist,        # Použije umělce z funkce
-                "url": video_url
-            })
-    else:
-        print("Snippet not found in item:", item)
+    for item in data.get("items", []):  # Opravil jsem odsazení
+        snippet = item.get("snippet")
+        if snippet:
+            video_title = snippet.get("title")  # Získání názvu videa
+            channel_title = snippet.get("channelTitle")  # Získání názvu kanálu (umělce)
+            video_id = item["id"].get("videoId")
 
+            if video_title and video_id:
+                video_url = f"https://www.youtube.com/watch?v={video_id}"
+
+                # Rozdělení názvu na song_name a artist pomocí parse_youtube_title
+                song_name, artist = parse_youtube_title(video_title)  # Opravil jsem název funkce
+
+                results.append({
+                    "song_name": song_name,  # Použije název skladby z funkce
+                    "artist": artist,        # Použije umělce z funkce
+                    "url": video_url
+                })
+        else:
+            print("Snippet not found in item:", item)
 
     return results
